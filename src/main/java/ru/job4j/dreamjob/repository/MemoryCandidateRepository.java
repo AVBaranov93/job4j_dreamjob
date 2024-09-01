@@ -2,6 +2,7 @@ package ru.job4j.dreamjob.repository;
 
 import ru.job4j.dreamjob.model.Candidate;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,11 +15,11 @@ public class MemoryCandidateRepository implements CandidateRepository {
     private final Map<Integer, Candidate> candidates = new HashMap<>();
 
     private MemoryCandidateRepository() {
-        save(new Candidate(0, "eduardo", "eduardo@mail.ru"));
-        save(new Candidate(0, "kate", "kate@gmail.com"));
-        save(new Candidate(0, "jack", "@yandex.ru"));
-        save(new Candidate(0, "poly", "@list.ru"));
-        save(new Candidate(0, "milly", "@gmail"));
+        save(new Candidate(0, "eduardo", "eduardo descr", LocalDateTime.now()));
+        save(new Candidate(0, "kate", "kate descr", LocalDateTime.now()));
+        save(new Candidate(0, "jack", "jack descr", LocalDateTime.now()));
+        save(new Candidate(0, "poly", "poly descr", LocalDateTime.now()));
+        save(new Candidate(0, "milly", "milly descr", LocalDateTime.now()));
     }
 
     public static MemoryCandidateRepository getInstance() {
@@ -40,8 +41,8 @@ public class MemoryCandidateRepository implements CandidateRepository {
     @Override
     public boolean update(Candidate candidate) {
         return candidates.computeIfPresent(candidate.getId(),
-                (id, oldCandidate) -> new Candidate(oldCandidate.getId(),
-                        candidate.getName(), candidate.getEmail())) != null;
+                (id, oldCandidate) -> new Candidate(oldCandidate.getId(), candidate.getName(),
+                        candidate.getDescription(), candidate.getCreationDate())) != null;
     }
 
     @Override
