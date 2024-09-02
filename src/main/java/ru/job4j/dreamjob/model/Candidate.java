@@ -59,24 +59,11 @@ public class Candidate {
 
         Candidate candidate = (Candidate) o;
 
-        if (id != candidate.id) {
-            return false;
-        }
-        if (!Objects.equals(name, candidate.name)) {
-            return false;
-        }
-        if (!Objects.equals(description, candidate.description)) {
-            return false;
-        }
-        return Objects.equals(creationDate, candidate.creationDate);
+        return id == candidate.id;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
-        return result;
+        return Objects.hash(id);
     }
 }
