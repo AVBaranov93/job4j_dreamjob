@@ -9,7 +9,11 @@ import ru.job4j.dreamjob.repository.MemoryCandidateRepository;
 @Controller
 @RequestMapping("/candidates")
 public class CandidateController {
-    private MemoryCandidateRepository candidateRepository = MemoryCandidateRepository.getInstance();
+    private final MemoryCandidateRepository candidateRepository;
+
+    public CandidateController(MemoryCandidateRepository candidateRepository) {
+        this.candidateRepository = candidateRepository;
+    }
 
     @GetMapping
     public String getAll(Model model) {
