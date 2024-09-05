@@ -22,6 +22,12 @@ public class CandidateController {
         return "candidates/create";
     }
 
+    @PostMapping("/create")
+    public String create(@ModelAttribute Candidate candidate) {
+        candidateRepository.save(candidate);
+        return "redirect:/candidates";
+    }
+
     @GetMapping("/{id}")
     public String getById(Model model, @PathVariable int id) {
         var candidateOptional = candidateRepository.findById(id);
