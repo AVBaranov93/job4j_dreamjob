@@ -18,6 +18,18 @@ public class Sql2oCandidateRepository implements CandidateRepository {
     @Override
     public Candidate save(Candidate candidate) {
         try (var connection = sql2o.open()) {
+            var createCandidates = """
+                    CREATE TABLE IF NOT EXISTS candidates
+                    (
+                        id            serial primary key,
+                        name          varchar not null,
+                        description   varchar not null,
+                        creation_date timestamp,
+                        city_id       int references cities(id),
+                        file_id       int references files(id)
+                    )
+                    """;
+            connection.createQuery(createCandidates).executeUpdate();
             var sql = """
                       INSERT INTO candidates(name, description, creation_date, city_id, file_id)
                       VALUES (:name, :description, :creationDate, :cityId, :fileId)
