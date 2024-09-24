@@ -20,6 +20,7 @@ public class Sql2oUserRepository implements UserRepository {
 
     @Override
     public Optional<User> save(User user) {
+        boolean isUnique = true;
         try (var connection = sql2o.open()) {
             var sql = """
                       INSERT INTO users(name, email, password)
@@ -33,9 +34,9 @@ public class Sql2oUserRepository implements UserRepository {
             user.setId(generatedKey);
         } catch (Exception e) {
             LOGGER.error("Catching exception", e);
-            return Optional.empty();
+            isUnique = false;
         }
-        return Optional.of(user);
+        return isUnique ? Optional.of(user) : Optional.empty();
     }
 
     @Override
